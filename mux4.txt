@@ -1,0 +1,8 @@
+`include "mux.v"
+module mux4( ALUresult,dataRead ,MEMtoREG ,writeData)
+input ALUresult,dataRead;
+output writeData;
+input MEMtoREG;
+reg writeData ;
+mux m4(ALUresult,dataRead ,MEMtoREG ,writeData);
+endmodule

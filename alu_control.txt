@@ -1,0 +1,17 @@
+module AluControl(funct,AluControl,ALUOp);
+input[5:0]funct;
+input ALUOp;
+output reg[3:0]AluControl;
+always@(funct,ALUOp)
+begin
+if(ALUOp==1)
+case(funct)
+100000: AluControl = 4'b0010 ; //add
+100100: AluControl = 4'b0000 ; //and
+100111: AluControl = 4'b0001 ; //or
+100111: AluControl = 4'b1100 ; //nor 
+100010: AluControl = 4'b0110 ; //sub
+101010: AluControl = 4'b0111 ; //slt
+endcase
+end 
+endmodule

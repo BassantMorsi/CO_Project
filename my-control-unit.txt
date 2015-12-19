@@ -1,0 +1,84 @@
+module control_unit(instruction,RegDst,Branch,MemRead,MemWrite,MemtoReg,RegWrite,Jump,ALUSrc,ALUOp);
+input [31:26] instruction;
+output Branch,MemRead,MemWrite,RegWrite,Jump,ALUSrc;
+output [1:0] RegDst;
+output [1:0] MemtoReg;
+output [1:0] ALUOp;
+reg Branch,MemRead,MemWrite,RegWrite,Jump,ALUSrc;
+reg [1:0] RegDst;
+reg [1:0] MemtoReg;
+reg [1:0] ALUOp;
+wire [5:0] op;
+assign op = instruction[31:26];
+always @(instruction)
+begin
+if (op == 6'b000011) begin // for jal inst
+   RegDst <= 2'b10;
+   MemtoReg <= 2'b10;
+   RegWrite <= 1'b1;
+   Jump <= 1'b1;
+   MemRead <= 1'b0;
+   MemWrite <= 1'b0;
+end else if (op == 6'b000000) begin // R format
+         RegDst <= 2'b01;
+         Branch <= 1'b0;
+         MemRead <= 1'b0;
+         MemWrite <= 1'b0;
+         MemtoReg <= 2'b00;
+         RegWrite <=1'b1;
+         Jump <= 1'b0;
+         ALUSrc <= 1'b0;
+         ALUOp <= 2'b10;
+end else if (op == 6'b001000) begin // for addi inst
+         RegDst <= 2'b00;
+         Branch <= 1'b0;
+         MemRead <= 1'b0;
+         MemWrite <= 1'b0;
+         MemtoReg <= 2'b00;
+         RegWrite <=1'b1;
+         Jump <= 1'b0;
+         ALUSrc <= 1'b1;
+         ALUOp <= 2'b00;
+end else if (op == 6'b001100) begin // for andi inst
+         RegDst <= 2'b00;
+         Branch <= 1'b0;
+         MemRead <= 1'b0;
+         MemWrite <= 1'b0;
+         MemtoReg <= 2'b00;
+         RegWrite <=1'b1;
+         Jump <= 1'b0;
+         ALUSrc <= 1'b1;
+         ALUOp <= 2'b11;
+end else if (op == 6'b100011) begin // for lw inst
+         RegDst <= 2'b00;
+         Branch <= 1'b0;
+         MemRead <= 1'b1;
+         MemWrite <= 1'b0;
+         MemtoReg <= 2'b01;
+         RegWrite <=1'b1;
+         Jump <= 1'b0;
+         ALUSrc <= 1'b1;
+         ALUOp <= 2'b00;
+end else if (op == 6'b101011) begin // for sw inst
+         Branch <= 1'b0;
+         MemRead <= 1'b0;
+         MemWrite <= 1'b1;
+         RegWrite <=1'b0;
+         Jump <= 1'b0;
+         ALUSrc <= 1'b1;
+         ALUOp <= 2'b00;
+end else if (op == 6'b000100) begin // for beq inst
+         Branch <= 1'b1;
+         MemRead <= 1'b0;
+         MemWrite <= 1'b0;
+         RegWrite <=1'b0;
+         Jump <= 1'b0;
+         ALUSrc <= 1'b0;
+         ALUOp <= 2'b01;
+end
+end
+endmodule
+
+
+
+    

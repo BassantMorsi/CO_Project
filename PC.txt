@@ -1,0 +1,10 @@
+module PC(inaddr,outaddr,clk);
+input[31:0]inaddr;
+input clk;
+output reg[31:0]outaddr;
+initial outaddr= 32'd0;
+always@(clk)
+begin
+outaddr = inaddr ;
+end
+endmodule 
