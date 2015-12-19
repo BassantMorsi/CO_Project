@@ -1,5 +1,5 @@
 module ALU (A,B,zeroSignal,ALUControl ,ALUResult)
-input [3:0] ALUControl; // 3 bits for the control
+input [3:0] ALUControl; // 4 bits for the control
 input [31:0] A,B;
 output  [31:0] ALUResult;
 reg [31:0] ALUResult;
