@@ -1,20 +1,27 @@
-module ALU (A,B,zeroSignal,ALUControl ,ALUResult)
-input [3:0] ALUControl; // 4 bits for the control
-input [31:0] A,B;
-output  [31:0] ALUResult;
-reg [31:0] ALUResult;
+module ALU (A,B,zeroSignal,ALUop ,fn,shamt,ALUResult);
+//input [3:0] ALUControl; // 4 bits for the control
+input[1:0]ALUop;
+input [4:0]shamt;
+input[5:0]fn ;
+input[31:0]A,B;
+output reg[31:0]ALUResult;
 output zeroSignal;
-assign zeroSignal= (ALUResult==0) ? 1 : 0 ; // if A=B the zero signal = 1
-always @(ALUControl, A, B) 
+assign zeroSignal= (ALUResult==0)  ; // if A=B the zero signal = 1
+always @(ALUop,fn, A, B) 
 begin 
-    case (ALUControl)
-        0: ALUResult <= #5 A & B;
-        1: ALUResult <= #5 A | B;
-        2: ALUResult <= #5 A + B; // for add , lw and sw
-        6: ALUResult <= #5 A - B;
-        7: ALUResult <= #5 A < B ? 1 : 0;
-        12: ALUResult <= #5 ~(A | B); 
-        default: ALUResult <= #5 0;
-    endcase
+  if (ALUop==2)
+   case(fn)
+ 32: ALUResult <= A + B;
+ 34:ALUResult <= A - B;
+ 36:ALUResult <= A & B;
+ 37:ALUResult <= A | B;
+ 0: ALUResult <= A<< shamt ;
+ 42: ALUResult<=  A < B ? 1 : 0;
+default: ALUResult <= 0;
+   endcase 
+else if (ALUop==0)
+ALUResult <= A + B;
+ else if (ALUop==1)
+ALUResult <= A - B;
+end
 endmodule
-
