@@ -1,17 +1,18 @@
-module AluControl(funct,AluControl,ALUOp);
+module AluControl(funct,AluControl,ALUOp,clk);
 input[5:0]funct;
 input ALUOp;
+input clk ;
 output reg[3:0]AluControl;
-always@(funct,ALUOp)
-begin
+always@(posedge clk)
 if(ALUOp==1)
+begin
 case(funct)
-100000: AluControl = 4'b0010 ; //add
-100100: AluControl = 4'b0000 ; //and
-100111: AluControl = 4'b0001 ; //or
-100111: AluControl = 4'b1100 ; //nor 
-100010: AluControl = 4'b0110 ; //sub
-101010: AluControl = 4'b0111 ; //slt
+6'b100000: AluControl=4'b0010 ; //add
+6'b100100: AluControl=4'b0000 ; //and
+6'b100101: AluControl=4'b0001 ; //or
+6'b100111: AluControl=4'b1100 ; //nor 
+6'b100010: AluControl=4'b0110 ; //sub
+6'b101010: AluControl=4'b0111 ; //slt
 endcase
 end 
 endmodule
