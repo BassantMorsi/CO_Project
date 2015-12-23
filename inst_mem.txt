@@ -2,7 +2,8 @@ module InstrMem(addr,instr);
  input[31:0]addr;
   output[31:0]instr;
  reg[31:0]instr;
-always@(addr)begin
+always@(addr)
+begin
  case(addr)
    32'd0:instr= {(6'd0),(5'd2),(5'd3),(5'd1),(5'd0),(6'd32)};
  
