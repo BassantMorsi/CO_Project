@@ -9,14 +9,14 @@ begin
 if(write==1)
 RegCall[writeaddr]=writedata;
 end
-always@(readaddr1 or RegCall[readaddr1])
+always@(posedge clk)
 begin
 if(readaddr1==0)
 readdata1=0;
 else
 readdata1=RegCall[readaddr1];
 end
-always@(readaddr2 or RegCall[readaddr2])
+always@(posedge clk)
 begin
 if(readaddr2==0)
 readdata2=0;
