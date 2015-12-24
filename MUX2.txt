@@ -1,8 +1,8 @@
 module mux2(pcPlusFour , ALUresult , andResult, newAddress);
-input pcPlusFour,ALUresult;
-output newAddress ;
+input [31:0]pcPlusFour,[31:0]ALUresult;
+output [31:0]newAddress ;
 input andResult;
-reg newAddress;
+reg [31:0]newAddress;
 always@(pcPlusFour or ALUresult or andResult)
 begin
 if (andResult==1'b0) newAddress=pcPlusFour ;

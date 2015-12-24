@@ -1,8 +1,8 @@
 module mux(ALUresult,dataRead ,MEMtoREG ,writeData);
-input ALUresult,dataRead;
-output writeData;
+input [31:0] ALUresult,dataRead;
+output [31:0]writeData;
 input MEMtoREG;
-reg writeData ;
+reg [31:0] writeData ;
 always@(ALUresult or dataRead  or MEMtoREG)
 begin
 if (MEMtoREG==1'b0) writeData=ALUresult;
