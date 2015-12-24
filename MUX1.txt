@@ -9,3 +9,4 @@ if (RegDst==1'b0) writeReg=rt;
 else writeReg=rd;
 end
 endmodule
+

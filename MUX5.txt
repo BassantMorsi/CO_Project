@@ -1,0 +1,11 @@
+module mux5(ALUresult,ALU2result ,jump ,newAddress);
+input [31:0]ALUresult,ALU2result;
+output [31:0]newAddress;
+input jump;
+reg [31:0]newAddress;
+always@(ALUresult or ALU2result  or jump )
+begin
+if (jump==1'b0) newAddress=ALUresult;
+else newAddress=ALUresult2;
+end
+endmodule

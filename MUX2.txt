@@ -1,11 +1,11 @@
-module mux2(pcPlusFour , ALUresult , andResult, newAddress);
-input [31:0]pcPlusFour,[31:0]ALUresult;
-output [31:0]newAddress ;
+module mux2(pcPlusFour , ALUresult , andResult, inaddr);
+input [31:0] pcPlusFour,ALUresult;
+output [31:0]inaddr ;
 input andResult;
-reg [31:0]newAddress;
+reg [31:0]inaddr;
 always@(pcPlusFour or ALUresult or andResult)
 begin
-if (andResult==1'b0) newAddress=pcPlusFour ;
-else newAddress=ALUresult;
+if (andResult==1'b0) inaddr=pcPlusFour ;
+else inaddr=ALUresult;
 end
 endmodule

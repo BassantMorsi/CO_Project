@@ -1,8 +1,8 @@
 module mux3(data,address ,ALUsrc ,B);
 input [31:0]data,address;
-output [31:0]toALU;
+output [31:0]B;
 input ALUsrc;
-reg [31:0]toALU ;
+reg [31:0]B ;
 always@(data or address or ALUsrc)
 begin
 if (ALUsrc ==1'b0) B=data;
