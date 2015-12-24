@@ -1,0 +1,11 @@
+module mux3(data,address ,ALUsrc ,B);
+input data,address;
+output toALU;
+input ALUsrc;
+reg toALU ;
+always@(data or address or ALUsrc)
+begin
+if (ALUsrc ==1'b0) B=data;
+else B=address;
+end
+endmodule

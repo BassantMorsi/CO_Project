@@ -1,8 +1,0 @@
-`include "mux.v"
-module mux1( rt,rd ,RegDst ,writeReg)
-input rt,rd;
-output writeReg ;
-input RegDst;
-reg writeReg ;
-mux m1(rt,rd,RegDst ,writeReg);
-endmodule

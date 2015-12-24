@@ -1,8 +1,0 @@
-`include "mux.v"
-module mux2( pcPlusFour , ALUresult , andResult, newAddress);
-input pcPlusFour,ALUresult;
-output newAddress ;
-input andResult;
-reg newAddress;
-mux m2 (pcPlusFour , ALUresult , andResult, newAddress);
-endmodule

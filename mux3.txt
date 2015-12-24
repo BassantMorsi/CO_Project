@@ -1,8 +1,0 @@
-`include "mux.v"
-module mux3( data,address ,ALUsrc ,B)
-input data,address;
-output toALU;
-input ALUsrc;
-reg toALU ;
-mux m3(data,address ,ALUsrc ,toALU);
-endmodule
