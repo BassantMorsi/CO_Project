@@ -1,0 +1,11 @@
+module mux(ALUresult,dataRead ,MEMtoREG ,writeData);
+input ALUresult,dataRead;
+output writeData;
+input MEMtoREG;
+reg writeData ;
+always@(ALUresult or dataRead  or MEMtoREG)
+begin
+if (MEMtoREG==1'b0) writeData=ALUresult;
+else writeData=dataRead ;
+end
+endmodule
