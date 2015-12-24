@@ -1,0 +1,8 @@
+module addFour(outaddr,pcPlusFour);
+input [31:0] outaddr;
+output reg [31:0] pcPlusFour;
+always@(outaddr)
+ begin 
+pcPlusFour<=outaddr+4;
+end 
+endmodule 
