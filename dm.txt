@@ -1,20 +1,33 @@
+			
 module dm(
 		input  wire		clk,
-		input  wire	[6:0]	addr,
+		input  wire	[31:0]	addr,
 		input  wire	        rd, wr,
 		input  wire 	[31:0]	wdata,
 		output wire	[31:0]	rdata);
  
-	reg [31:0] mem [0:127];  
-
+	reg [31:0] memdata [0:31];  
+ initial begin 
+        memdata[0] = 32'b00000000000000000000000000000000;
+        memdata[1] = 32'b00000000000000000000000000000000;
+        memdata[2] = 32'b00000000000000000000000000000000;
+        memdata[3] = 32'b00000000000000000000000000000000;
+        memdata[4] = 32'b00000000000000000000000000000000;
+        memdata[5] = 32'b00000000000000000000000000000000;
+        memdata[6] = 32'b00000000000000000000000000000000;
+        memdata[7] = 32'b00000000000000000000000000000000;
+        memdata[8] = 32'b00000000000000000000000000000000;
+        memdata[9] = 32'b00000000000000000000000000000000;
+        memdata[10] = 32'b00000000000000000000000000000000;
+end 
 always @(posedge clk) begin
 		if (wr) begin
-			mem[addr] <= wdata;
+			memdata[addr] <= wdata;
 		end
 	end
   
 
-	assign rdata = wr ? wdata : mem[addr][31:0];
+	assign rdata = wr ? wdata : memdata[addr][31:0];
       
 	
 
