@@ -1,27 +1,25 @@
-module ALU (A,B,zeroSignal,ALUop ,fn,shamt,ALUResult);
+module ALU (A,B,zeroSignal,AluControl ,shamt,ALUResult);
 //input [3:0] ALUControl; // 4 bits for the control
-input[1:0]ALUop;
+input[3:0]AluControl;
 input [4:0]shamt;
-input[5:0]fn ;
+
 input[31:0]A,B;
 output reg[31:0]ALUResult;
 output zeroSignal;
+//
+AluControl alu1(funct,AluControl,ALUOp,clk);
+//
 assign zeroSignal= (ALUResult==0)  ; // if A=B the zero signal = 1
-always @(ALUop,fn, A, B) 
+always @(AluControl,A, B) 
 begin 
-  if (ALUop==2)
-   case(fn)
- 32: ALUResult <= A + B;
- 34:ALUResult <= A - B;
- 36:ALUResult <= A & B;
- 37:ALUResult <= A | B;
- 0: ALUResult <= A<< shamt ;
- 42: ALUResult<=  A < B ? 1 : 0;
-default: ALUResult <= 0;
-   endcase 
-else if (ALUop==0)
-ALUResult <= A + B;
- else if (ALUop==1)
-ALUResult <= A - B;
+case(AluControl)
+4'b0010:ALUResult=A+B;
+4'b0000:ALUResult=A&B;
+4'b0001:ALUResult=A|B;
+4'b1100:ALUResult=A^|B;
+4'b0011:ALUResult=A-B;
+4'b0111:ALUResult=A < B ? 1 : 0;
+4'b0110:ALUResult=B<<shamt;
+endcase
 end
 endmodule

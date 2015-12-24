@@ -1,28 +1,21 @@
-module InstrMem(addr,instr);
- input[31:0]addr;
-  output[31:0]instr;
- reg[31:0]instr;
-always@(addr)
-begin
- case(addr)
-   32'd0:instr= {(6'd0),(5'd2),(5'd3),(5'd1),(5'd0),(6'd32)};
- 
- 
- endcase
+module InstrMem(clk, addr, instr);
+
+input		clk;
+input	[31:0]	addr;
+output	[31:0]	instr;
+
+reg	[31:0]	instr;
+
+//	memAddr is an address register in the memory side.
+reg	[31:0]	memAddr;
+reg	[31:0]	Imem[0:512];
+
+initial
+	$readmemb ("Imips.data", Imem);
+
+always @(posedge clk) begin
+	memAddr = addr ;
+	instr = Imem[memAddr];
 end
+
 endmodule
-
-
-/*module InstrMem(addr,instruction);
- input[31:0]addr;
- output reg[31:0]instruction;
- reg[31:0]instr;
-always@(addr)begin
- case(addr)
-   32'd0: instr= {(6'd0),(5'd2),(5'd3),(5'd1),(5'd0),(6'd32)};
-   32'd4 :instr={(6'd0 ),(5'd4),(5'd5),(5'd8),(5'd0),(6'd32)};
- default:instr=32'd0;
- endcase
-instruction =instr[31:0];
-end
-endmodule*/
