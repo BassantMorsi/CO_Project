@@ -1,0 +1,11 @@
+module mux1(rt,rd,RegDst,writeReg);
+input [31:0]rt,rd;
+output [31:0]writeReg ;
+input RegDst;
+reg writeReg ;
+always@(rt or rd  or RegDst)
+begin
+if (RegDst==1'b0) writeReg=rt;
+else writeReg=rd;
+end
+endmodule
