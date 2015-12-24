@@ -1,0 +1,8 @@
+fe el Imips.data 
+deh e3mel file zayoh fe modelsim we 7ot fe el instrauction deh 
+00010010001100100000000000001111
+00010010001100100000000000010101 
+
+
+
+ah 7aga kaman fe 5ally balkom mn asamy elfile fe Imips 3shan hatkon mo5talefa 3andokom

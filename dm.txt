@@ -1,10 +1,9 @@
-			
-module dm(
-		input  wire		clk,
-		input  wire	[31:0]	addr,
-		input  wire	        rd, wr,
-		input  wire 	[31:0]	wdata,
-		output wire	[31:0]	rdata);
+module datamem(addr,rd,wr,wdata,rdata);
+
+input  wire	[31:0]	addr;
+input  wire     rd, wr;
+input  wire 	[31:0]	wdata;
+output wire	[31:0]	rdata;
  
 	reg [31:0] memdata [0:31];  
  initial begin 
@@ -20,7 +19,7 @@ module dm(
         memdata[9] = 32'b00000000000000000000000000000000;
         memdata[10] = 32'b00000000000000000000000000000000;
 end 
-always @(posedge clk) begin
+always @(addr,rd,wr,wdata) begin
 		if (wr) begin
 			memdata[addr] <= wdata;
 		end

@@ -1,26 +1,41 @@
-module RegFile(writeaddr,writedata,readaddr1,readdata1,readaddr2,readdata2,write,clk);
-input[4:0]writeaddr,readaddr1,readaddr2;
+module RegFile(writeaddr,writedata,readaddr1,readdata1,readaddr2,readdata2,write);
+input [25:21]readaddr1;
+input [20:16]readaddr2;
+input[15:11]writeaddr;
 input[31:0]writedata;
-input write,clk;
+input write;
 output reg[31:0]readdata1,readdata2;
 reg[31:0]RegCall[31:0];
-always@(posedge clk)
+initial begin 
+        RegCall[0] = 32'b00000000000000000000000000000000;
+        RegCall[1] = 32'b00000000000000000000000000000000;
+        RegCall[2] = 32'b00000000000000000000000000000000;
+        RegCall[3] = 32'b00000000000000000000000000000000;
+        RegCall[4] = 32'b00000000000000000000000000000000;
+        RegCall[5] = 32'b00000000000000000000000000000000;
+        RegCall[6] = 32'b00000000000000000000000000000000;
+        RegCall[7] = 32'b00000000000000000000000000000000;
+        RegCall[8] = 32'b00000000000000000000000000000000;
+        RegCall[9] = 32'b00000000000000000000000000000000;
+        RegCall[10] = 32'b00000000000000000000000000000000;
+end 
+always@(readaddr1,readaddr2,write)
 begin
 if(write==1)
-RegCall[writeaddr]=writedata;
+RegCall[writeaddr]<=writedata;
 end
-always@(posedge clk)
+always@(readaddr1)
 begin
 if(readaddr1==0)
-readdata1=0;
+readdata1<=0;
 else
-readdata1=RegCall[readaddr1];
+readdata1<=RegCall[readaddr1];
 end
-always@(posedge clk)
+always@(readaddr2)
 begin
 if(readaddr2==0)
-readdata2=0;
+readdata2<=0;
 else
-readdata2=RegCall[readaddr2];
+readdata2<=RegCall[readaddr2];
 end
 endmodule

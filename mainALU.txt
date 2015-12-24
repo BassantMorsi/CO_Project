@@ -1,14 +1,10 @@
-module ALU (A,B,zeroSignal,AluControl ,shamt,ALUResult);
+module ALU (ALUResult,A,B,zeroSignal,AluControl ,shamt);
 //input [3:0] ALUControl; // 4 bits for the control
 input[3:0]AluControl;
 input [4:0]shamt;
-
 input[31:0]A,B;
 output reg[31:0]ALUResult;
 output zeroSignal;
-//
-AluControl alu1(funct,AluControl,ALUOp,clk);
-//
 assign zeroSignal= (ALUResult==0)  ; // if A=B the zero signal = 1
 always @(AluControl,A, B) 
 begin 

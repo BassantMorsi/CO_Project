@@ -1,6 +1,6 @@
-module InstrMem(clk, addr, instr);
+module InstrMem( addr, instr);
 
-input		clk;
+
 input	[31:0]	addr;
 output	[31:0]	instr;
 
@@ -13,7 +13,7 @@ reg	[31:0]	Imem[0:512];
 initial
 	$readmemb ("Imips.data", Imem);
 
-always @(posedge clk) begin
+always @(addr) begin
 	memAddr = addr ;
 	instr = Imem[memAddr];
 end
