@@ -1,0 +1,8 @@
+module and1(zero,branch,result);
+input zero,branch;
+output reg result ;
+always @(zero,branch)
+begin 
+result= zero&&branch ;
+end 
+endmodule

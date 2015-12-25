@@ -1,0 +1,9 @@
+module add1(pcPlus4,shifted,out);
+input [31:0]pcPlus4;
+input [31:0]shifted;
+output reg [31:0] out;
+always@(pcPlus4,shifted)
+ begin 
+out<=pcPlus4+shifted;
+end 
+endmodule 

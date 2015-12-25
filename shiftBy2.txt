@@ -1,0 +1,14 @@
+
+module lshift (in, out);  
+input  [25:0] in;    
+output [28:0] out;  
+reg    [28:0] out;  
+ 
+  always @(in)  
+  begin  
+    
+      out <= in << 2;  
+      
+  
+  end  
+endmodule 

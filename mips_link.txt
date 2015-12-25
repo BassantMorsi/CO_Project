@@ -1,0 +1,76 @@
+`include "addFour.v"
+`include "pc.v" 
+`include "instr_mem.v"
+`include "control.v"
+`include "reg_file.v"
+`include "mainALU.v"
+`include "alu_control.v"
+`include "datamem.v"
+`include "signExtend.v"
+`include "mux1.v"
+`include "mux2.v"
+`include "mux3.v"
+`include "mux4.v"
+`include "mux5.v"
+`include "add1.v"
+`include "shiftLeft2.v"
+`include "and1.v"
+`include "merg_bit.v"
+module links (clk);
+input clk ;
+wire clk ;
+wire [31:0]outaddr;//input lel add elly 3ala elshmal we 3ala el mux2 elly warah 
+wire [31:0]pcPlusFour;
+//wire [31:0]inaddr;
+//wire [31:0]outaddr;
+wire [31:0]addr;
+wire [31:0]instr;//deh output mn instr mem input lel ba3deeha sha8ala fe control we reg file
+wire [1:0]RegDst;
+wire      Branch;
+wire      MemRead;
+wire      MemWrite;
+wire [1:0]MemtoReg;
+wire      RegWrite;
+wire      Jump;
+wire      ALUSrc;
+wire [5:0]ALUOp;
+wire [31:0]writedata; //hatemshy ma3 el mux elly 3ala elyemeen 5ales ka output mux4
+wire [4:0]writeaddr ;//btw mux1 and regFile
+wire [31:0]readdata1;
+wire [31:0]readdata2;
+wire [4:0]writeReg;
+wire [3:0]AluControl;
+wire [31:0]B     ;                    //mux3 in btw mux3 and alu
+wire [31:0]out; // in btw mux3 and extend and sl2
+wire zeroSignal ; //btw alu & and
+wire [31:0]ALUResult; //input too for mem or mux4
+wire [31:0]rdata ; //btw mem and mux4
+wire [31:0]out1; //e7tmal error we deh da5la 3ala add
+wire [31:0]addresult;//input lel mux2
+wire result;//mn el and da5la 3ala mux 2
+wire [31:0]inaddr ;//output of mux2 in in mux5
+wire [31:0]newAddress ;//out of mux5 in pc
+wire [28:0]beJumAdd ; //btw elshift we el merg
+wire [31:0]miss;//yorag3 
+//modules
+addFour add1(.outaddr(outaddr),.pcPlusFour(pcPlusFour));//
+PC pc1(.inaddr(newAddress),.outaddr(pcPlusFour),.clk(clk));//
+InstrMem instmem1(.addr(pcPlusFour), .instr(instr));//
+control_unit control1(.instruction(instr[31:26]),.RegDst(RegDst),.Branch(Branch),.MemRead(MemRead),.MemWrite(MemWrite),.MemtoReg(MemtoReg),.RegWrite(RegWrite),.Jump(Jump),.ALUSrc(ALUSrc),.ALUOp(ALUOp));//
+RegFile regF1(.writeaddr(writeReg),.writedata(writedata),.readaddr1(instr[25:21]),.readdata1(readdata1),.readaddr2(instr[20:16]),.readdata2(readdata2),.write(RegWrite));//
+AluControl aluCont1(.funct(instr[5:0]),.AluControl(AluControl),.ALUOp(ALUOp));//
+ALU alu1(.A(readdata1),.B(B ),.zeroSignal(zeroSignal),.AluControl(AluControl) ,.shamt(instr[10:6]),.ALUResult(ALUResult));//shumt ba5doh mn el instruction
+SignExtend sig1(.in(instr[15:0]),.out(out));//
+datamem mem1(.addr(ALUResult),.rd(MemRead), .wr(MemWrite),.wdata(readdata2),.rdata(rdata));//
+mux1 m1(.rt(instr[20:16]),.rd(instr[15:11]),.RegDst(RegDst),.writeReg(writeReg));//
+mux2 m2(.pcPlusFour(outaddr) , .ALUresult(addresult) , .andResult(result), .inaddr(inaddr));//
+mux3 m3(.data(readdata2),.address(out) ,.ALUsrc(ALUSrc) ,.B(B));//
+mux4 m4(.ALUresult(ALUResult),.dataRead(rdata) ,.MEMtoREG(MemtoReg),.writeData(RegWrite));//
+mux5 m5(.ALUresult(miss),.ALU2result(inaddr) ,.jump(Jump) ,.newAddress(newAddress));
+lshift lf1(.in(out), .out(out1)); 
+lshift lf2(.in(instr[25:0]), .out(beJumAdd));
+meg merg1(.in1(outaddr[31:28]),.in2(beJumAdd),.out(miss));
+add1 a1(.pcPlus4(outaddr),.shifted(out1),.out(addresult));
+and1 d1(.zero(zeroSignal),.branch(Branch),.result(result));
+
+endmodule 

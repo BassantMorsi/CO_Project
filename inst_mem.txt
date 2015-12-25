@@ -8,13 +8,13 @@ reg	[31:0]	instr;
 
 //	memAddr is an address register in the memory side.
 reg	[31:0]	memAddr;
-reg	[31:0]	Imem[0:512];
+reg	[31:0]	Imem[512:0];
 
 initial
 	$readmemb ("Imips.data", Imem);
 
 always @(addr) begin
-	memAddr = addr ;
+	memAddr = addr[9:2] ;
 	instr = Imem[memAddr];
 end
 
