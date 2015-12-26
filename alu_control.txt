@@ -1,8 +1,10 @@
-module AluControl(AluControl,funct,ALUOp);
+
+module AluControl(funct,ALUOp,AluControl);
 input[5:0]funct;
 input [1:0]ALUOp;
 //input clk ;
-output reg[3:0]AluControl;
+output [3:0] AluControl;
+ reg[3:0]AluControl;
 
 always@(funct or ALUOp)
 if(ALUOp==2'b10)
