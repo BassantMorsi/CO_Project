@@ -1,20 +1,34 @@
-module AluControl(AluControl,funct,ALUOp);
+
+module AluControl(funct,ALUOp,AluControl);
 input[5:0]funct;
 input [1:0]ALUOp;
 //input clk ;
-output reg[3:0]AluControl;
+output [3:0] AluControl;
+ reg[3:0]AluControl;
 
-always@(funct,ALUOp)
-if(ALUOp==10)
+always@(funct or ALUOp)
+if(ALUOp==2'b10)
 begin
 case(funct)
-6'b100000: AluControl=4'b0010 ; //add
-6'b100100: AluControl=4'b0000 ; //and
-6'b100101: AluControl=4'b0001 ; //or
-6'b100111: AluControl=4'b1100 ; //nor 
-6'b100010: AluControl=4'b0011 ; //sub
-6'b101010: AluControl=4'b0111 ; //slt
-6'b000000: AluControl=4'b0110 ; //sll
+6'b100000: AluControl<=4'b0010 ; //add
+6'b100100: AluControl<=4'b0000 ; //and
+6'b100101: AluControl<=4'b0001 ; //or
+6'b100111: AluControl<=4'b1100 ; //nor 
+6'b100010: AluControl<=4'b0011 ; //sub
+6'b101010: AluControl<=4'b0111 ; //slt
+6'b000000: AluControl<=4'b0110 ; //sll
+//default AluControl<=4'b0000;
 endcase
-end 
+end
+else if (ALUOp==2'b00) begin
+AluControl<=4'b0010 ;
+end
+else if (ALUOp==2'b01)begin
+ AluControl<=4'b0011;
+end
+
+
 endmodule
+
+
+
